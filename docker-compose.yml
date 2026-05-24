@@ -1,0 +1,43 @@
+version: '3.8'
+
+# Postgres is now Supabase — no local postgres service needed.
+# Set DATABASE_URL in your .env to your Supabase Direct Connection string.
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: geofence_backend
+    environment:
+      DATABASE_URL:         ${DATABASE_URL}
+      HOST:                 ${HOST:-0.0.0.0}
+      PORT:                 ${PORT:-8080}
+      JWT_SECRET:           ${JWT_SECRET}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      ALLOWED_WS_ORIGINS:   ${ALLOWED_WS_ORIGINS}
+    ports:
+      - "${PORT:-8080}:${PORT:-8080}"
+    networks:
+      - geofence_net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_WS_URL:  ${VITE_WS_URL}
+    container_name: geofence_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - geofence_net
+    restart: unless-stopped
+
+networks:
+  geofence_net:
+    driver: bridge

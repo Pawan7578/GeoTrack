@@ -1,0 +1,252 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --surface-900: #080c14;
+  --surface-800: #0d1220;
+  --surface-700: #121929;
+  --surface-600: #1a2236;
+  --surface-500: #222d42;
+  --amber: #f59e0b;
+  --amber-dim: #d97706;
+  --emerald: #10b981;
+  --rose: #f43f5e;
+  --sky: #0ea5e9;
+  --text-primary: #e8eaf2;
+  --text-secondary: #8892a4;
+  --text-muted: #4a5568;
+  --border: rgba(255,255,255,0.06);
+  --border-highlight: rgba(245,158,11,0.3);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--surface-900);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Leaflet overrides ───────────────────────────────────────────────────── */
+.leaflet-container {
+  background: #0d1829 !important;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.leaflet-tile-pane { filter: brightness(0.8) saturate(0.7); }
+
+.leaflet-control-zoom {
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.leaflet-control-zoom a {
+  background: var(--surface-700) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border) !important;
+  width: 32px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+.leaflet-control-zoom a:hover {
+  background: var(--surface-500) !important;
+  color: var(--text-primary) !important;
+}
+
+.leaflet-draw-toolbar a {
+  background: var(--surface-700) !important;
+  border-color: var(--border) !important;
+}
+
+/* Geofence polygon styles */
+.geofence-polygon { stroke-dasharray: none; }
+
+/* Vehicle marker pulse */
+.vehicle-marker-pulse {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--amber);
+  border: 2px solid rgba(245,158,11,0.5);
+  box-shadow: 0 0 0 0 rgba(245,158,11,0.6);
+  animation: vehiclePulse 2s ease-out infinite;
+}
+@keyframes vehiclePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(245,158,11,0.6); }
+  70%  { box-shadow: 0 0 0 10px rgba(245,158,11,0); }
+  100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface-500); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Utility classes ─────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(13,18,32,0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.card {
+  background: var(--surface-800);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.card-hover {
+  transition: border-color 0.2s, background 0.2s;
+}
+.card-hover:hover {
+  border-color: var(--border-highlight);
+  background: var(--surface-700);
+}
+
+.input-field {
+  background: var(--surface-700);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.input-field:focus {
+  border-color: var(--amber);
+}
+.input-field::placeholder { color: var(--text-muted); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+  white-space: nowrap;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--amber);
+  color: #0a0c12;
+}
+.btn-primary:hover:not(:disabled) { background: #fbbf24; }
+
+.btn-secondary {
+  background: var(--surface-600);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--surface-500); }
+
+.btn-danger {
+  background: rgba(244,63,94,0.15);
+  color: #fb7185;
+  border: 1px solid rgba(244,63,94,0.3);
+}
+.btn-danger:hover:not(:disabled) { background: rgba(244,63,94,0.25); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.badge-amber  { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+.badge-emerald{ background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+.badge-rose   { background: rgba(244,63,94,0.15);  color: #fb7185; border: 1px solid rgba(244,63,94,0.25); }
+.badge-sky    { background: rgba(14,165,233,0.15); color: #38bdf8; border: 1px solid rgba(14,165,233,0.25); }
+.badge-muted  { background: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid var(--border); }
+
+/* ── Toast animations ────────────────────────────────────────────────────── */
+.toast-enter {
+  animation: toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.toast-exit {
+  animation: toastOut 0.25s ease-in forwards;
+}
+@keyframes toastIn {
+  from { transform: translateX(110%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes toastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(110%); opacity: 0; }
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+.tab-active {
+  color: var(--amber);
+  border-bottom: 2px solid var(--amber);
+}
+.tab-inactive {
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.sidebar-item:hover {
+  background: var(--surface-600);
+  color: var(--text-primary);
+}
+.sidebar-item.active {
+  background: rgba(245,158,11,0.12);
+  color: var(--amber);
+}
+
+/* ── Stat grid animation ─────────────────────────────────────────────────── */
+.stat-card {
+  animation: fadeIn 0.4s ease-out both;
+}
+.stat-card:nth-child(2) { animation-delay: 0.05s; }
+.stat-card:nth-child(3) { animation-delay: 0.10s; }
+.stat-card:nth-child(4) { animation-delay: 0.15s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Dot live indicator ──────────────────────────────────────────────────── */
+.live-dot {
+  width: 8px; height: 8px;
+  background: var(--emerald);
+  border-radius: 50%;
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
